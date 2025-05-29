@@ -14,8 +14,6 @@ import reactor.core.publisher.Mono;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 @Slf4j
@@ -32,8 +30,11 @@ public class CoverServiceImpl implements CoverService {
         String apiKey = request.getApikey();
 
         String prompt = String.format(
-                "다음 책 제목과 내용을 바탕으로 한 줄 줄거리로 요약해줘.\n" +
-                        "제목: %s\n내용: %s\n->", title, content
+                """
+                        다음 책 제목과 내용을 바탕으로 한 줄 줄거리로 요약해줘.
+                        제목: %s
+                        내용: %s
+                        ->""", title, content
         );
 
         ChatMessage message = new ChatMessage("user", prompt);
@@ -67,8 +68,11 @@ public class CoverServiceImpl implements CoverService {
         try {
             // 1️⃣ synopsis가 한국어일 수 있으므로 영어 번역
             String translationPrompt = String.format(
-                    "Translate the following Korean book synopsis into natural and vivid English for use in an image generation prompt.\n\n" +
-                            "Title: %s\nSynopsis: %s", title, synopsis
+                    """
+                            Translate the following Korean book synopsis into natural and vivid English for use in an image generation prompt.
+                            
+                            Title: %s
+                            Synopsis: %s""", title, synopsis
             );
 
             ChatMessage message = new ChatMessage("user", translationPrompt);
@@ -89,12 +93,14 @@ public class CoverServiceImpl implements CoverService {
 
             // 2️⃣ 이미지 프롬프트 구성
             String prompt = String.format(
-                    "Create a high-quality, professionally illustrated book cover for the following story.\n" +
-                            "The design should reflect the atmosphere, genre, and emotional tone of the story.\n" +
-                            "Use symbolic elements or scenes from the narrative, avoiding literal or random visuals.\n" +
-                            "Incorporate the book title '%s' clearly and elegantly as part of the cover design.\n" +
-                            "Avoid decorative clutter and focus on meaningful visual storytelling.\n\n" +
-                            "Story Summary: \"%s\"",
+                    """
+                            Create a high-quality, professionally illustrated book cover for the following story.
+                            The design should reflect the atmosphere, genre, and emotional tone of the story.
+                            Use symbolic elements or scenes from the narrative, avoiding literal or random visuals.
+                            Incorporate the book title '%s' clearly and elegantly as part of the cover design.
+                            Avoid decorative clutter and focus on meaningful visual storytelling.
+                            
+                            Story Summary: "%s\"""",
                     title, translatedSynopsis
             );
 
