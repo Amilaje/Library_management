@@ -1,5 +1,7 @@
-INSERT INTO book (title, author, genre, content, synopsis, cover_image_url, view_count)
-VALUES
+-- 도서 기본 데이터 (중복 삽입 방지용 MERGE INTO)
+
+MERGE INTO book (title, author, genre, content, synopsis, cover_image_url, view_count)
+KEY (title, author) VALUES
 ('살롱 드 경성 2', '김인혜', 'Romance', '경성 시대 여성 예술가들의 삶과 예술을 담은 이야기', NULL, NULL, 0),
 ('천 개의 파랑', '천선란', 'Science Fiction', '인공지능과 인간의 경계에서 존재의 의미를 묻는 소설', NULL, NULL, 0),
 ('불편한 편의점', '김호연', 'Drama', '서울 청파동 골목 편의점에서 벌어지는 따뜻한 이야기', NULL, NULL, 0),
@@ -12,5 +14,6 @@ VALUES
 ('불안', '알랭 드 보통', 'Philosophy', '현대 사회의 불안을 다양한 관점에서 조명하고 위로하는 철학적 에세이', NULL, NULL, 0);
 
 /*
-기본 데이터 안들어가면 data/librarydb.mv.db 삭제하고 다시 실행해보기,,
+기존 데이터가 없을 때만 삽입됨
+실행되지 않으면 mv.db 삭제 후 재실행
 */
