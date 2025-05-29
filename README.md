@@ -6,7 +6,7 @@ Spring Boot와 React를 활용한 도서 관리 시스템입니다.
 ---
 
 ## 📁 프로젝트 구조
-
+```
 📁 Library_management/
 ├── .vscode/ # VSCode 설정
 │ └── settings.json
@@ -20,7 +20,7 @@ Spring Boot와 React를 활용한 도서 관리 시스템입니다.
 ├── docs/ # 문서 자료
 │
 └── README.md # 프로젝트 소개 문서
-
+```
 ---
 
 ## ✅ 주요 기능
