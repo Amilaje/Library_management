@@ -34,7 +34,7 @@ Spring Boot와 React를 활용한 도서 관리 시스템입니다.
 ---
 
 
-🛠 사용 기술
+## 🛠 사용 기술
 Frontend: React, Axios, CSS Modules
 
 Backend: Java 17, Spring Boot, Gradle, JPA
@@ -45,14 +45,14 @@ Tool: VSCode, IntelliJ, Postman, GitHub
 
 ---
 
-🛠 Git 작업 규칙 요약
+## 🛠 Git 작업 규칙 요약
 항상 push 전에 git pull 로 최신 코드 동기화
 
 pull 후 에러 없이 동작하는지 확인
 
 이상 없을 때만 자기 브랜치에 push
 
-🌿 브랜치 전략
+### 🌿 브랜치 전략
 개인 브랜치 → front / back 브랜치 (팀원 간 합의 후 merge)
 
 front / back → main 브랜치 (전체 팀원 합의 후 merge)
