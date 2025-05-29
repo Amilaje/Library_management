@@ -39,6 +39,6 @@ Frontend: React, Axios, CSS Modules
 
 Backend: Java 17, Spring Boot, Gradle, JPA
 
-Database: H2 or MySQL
+Database: H2 Database
 
 Tool: VSCode, IntelliJ, Postman, GitHub
