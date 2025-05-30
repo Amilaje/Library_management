@@ -65,8 +65,20 @@ Tools: VSCode, IntelliJ, Postman, GitHub
 pull 후 에러 없이 동작하는지 확인
 
 문제 없을 때만 자기 브랜치에 push
+---
 
 ### 🌿 브랜치 전략
 개인 브랜치 → front / back 브랜치 (팀원 간 합의 후 merge)
 
 front / back → main 브랜치 (전체 팀원 합의 후 merge)
+
+## ⚙️ 백엔드 구성 요약
+
+- Java 17, Spring Boot 3.x
+- Gradle 기반 프로젝트
+- JPA + H2 Database 사용 (개발용)
+- Entity 클래스와 Repository 설계
+- REST API 방식으로 CRUD 구현
+- Postman을 통한 API 테스트
+- `/api/books` 엔드포인트 기반 도서 등록/조회/수정/삭제 기능
+
