@@ -1,6 +1,7 @@
 import './View.css';
 import { Link } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from "../services/axios";
 
 const View = () => {
   const navigate = useNavigate();
@@ -8,6 +9,19 @@ const View = () => {
 
   const handleEdit = () => {
     navigate(`/edit/${id}`);
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      try {
+        await axios.delete(`http://localhost:8080/${id}`);
+        alert('삭제되었습니다.');
+        navigate('/');
+      } catch (error) {
+        console.error('삭제 실패:', error);
+        alert('삭제에 실패했습니다.');
+      }
+    }
   };
 
   return (
@@ -55,7 +69,7 @@ const View = () => {
         <span className="date-info">작성일: 2025-05-29 / 수정일: 2025-05-30</span>
         <div className="view-actions">
           <button className="btn-edit" onClick={handleEdit}>수정</button>
-          <button className="btn-delete">삭제</button>
+          <button className="btn-delete" onClick={handleDelete}>삭제</button>
         </div>
       </div>
     </div>
