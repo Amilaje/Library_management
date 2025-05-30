@@ -20,4 +20,11 @@ public class CoverController {
     ) {
         return coverService.generateCover(id, request);
     }
+
+    @PostMapping("/generate-cover")
+    public CoverGenerateResponse generateCoverWithoutId(
+            @RequestBody CoverGenerateRequest request
+    ) {
+        return coverService.generateCover(null, request);
+    }
 }

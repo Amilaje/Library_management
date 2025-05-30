@@ -66,7 +66,7 @@ public class CoverServiceImpl implements CoverService {
     }
     private String generateImageFromSynopsis(String synopsis, String title, String apiKey) {
         try {
-            // 1️⃣ synopsis가 한국어일 수 있으므로 영어 번역
+            // synopsis 영어 번역
             String translationPrompt = String.format(
                     """
                             Translate the following Korean book synopsis into natural and vivid English for use in an image generation prompt.
@@ -89,9 +89,8 @@ public class CoverServiceImpl implements CoverService {
             JsonNode root = objectMapper.readTree(translationJson);
             String translatedSynopsis = root.path("choices").get(0).path("message").path("content").asText();
 
-            log.info("📝 번역된 줄거리: {}", translatedSynopsis);
+            log.info("번역된 줄거리: {}", translatedSynopsis);
 
-            // 2️⃣ 이미지 프롬프트 구성
             String prompt = String.format(
                     """
                             Create a high-quality, professionally illustrated book cover for the following story.
@@ -120,14 +119,14 @@ public class CoverServiceImpl implements CoverService {
                     .bodyValue(requestBody)
                     .retrieve()
                     .bodyToMono(String.class)
-                    .doOnNext(json -> log.info("🎨 DALL·E 응답 JSON: {}", json))
+                    .doOnNext(json -> log.info("DALL·E 응답 JSON: {}", json))
                     .block();
 
             JsonNode imageRoot = objectMapper.readTree(response);
             return imageRoot.path("data").get(0).path("url").asText();
 
         } catch (Exception e) {
-            log.error("🔴 이미지 생성 실패", e);
+            log.error("이미지 생성 실패", e);
             return "https://example.com/default-cover.jpg";
         }
     }
