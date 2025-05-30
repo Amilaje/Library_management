@@ -72,7 +72,7 @@ pull 후 에러 없이 동작하는지 확인
 
 front / back → main 브랜치 (전체 팀원 합의 후 merge)
 
-## ⚙️ 백엔드 구성 요약
+## 📨 백엔드 구성 요약
 
 - Java 17, Spring Boot 3.x
 - Gradle 기반 프로젝트
