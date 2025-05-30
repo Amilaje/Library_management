@@ -38,7 +38,7 @@ React와 Axios를 활용한 API 연동
 
 Spring Boot 기반 RESTful API 설계
 
-(예정) AI를 활용한 도서 표지 이미지 생성 기능
+AI를 활용한 도서 표지 이미지 생성 기능
 
 ---
 
