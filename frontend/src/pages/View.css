@@ -27,6 +27,8 @@
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .header-placeholder {
@@ -92,6 +94,7 @@
   font-style: italic;
 }
 
+
 .view-footer {
   display: flex;
   justify-content: space-between;
@@ -113,4 +116,9 @@
 
 .view-actions button:hover {
   opacity: 0.85;
+}
+
+.header-image {
+  max-height: 40px;
+  object-fit: contain;
 }
