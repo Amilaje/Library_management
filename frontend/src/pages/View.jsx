@@ -1,13 +1,24 @@
 import './View.css';
+import { Link } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const View = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const handleEdit = () => {
+    navigate(`/edit/${id}`);
+  };
+
   return (
     <div className="view-container">
       {/* 1. 상단 헤더 */}
       <div className="view-header">
-        <button className="header-button">홈</button>
-        <div className="header-placeholder">무언가 들어갈 공간입니다.</div>
-        <button className="header-button">새 도서 등록</button>
+        <Link to="/" className="header-button">홈</Link>
+        <div className="header-placeholder">
+          <img src="/image/AB.png" alt="상단 이미지" className="header-image" />
+        </div>
+        <Link to="/publish" className="header-button">새 도서 등록</Link>
       </div>
 
       {/* 2. 책 이미지 + 설명 */}
@@ -43,7 +54,7 @@ const View = () => {
       <div className="view-footer">
         <span className="date-info">작성일: 2025-05-29 / 수정일: 2025-05-30</span>
         <div className="view-actions">
-          <button className="btn-edit">수정</button>
+          <button className="btn-edit" onClick={handleEdit}>수정</button>
           <button className="btn-delete">삭제</button>
         </div>
       </div>
