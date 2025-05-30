@@ -8,7 +8,7 @@ import logoImage from '../assets/logo.png';
 function Home() {
   const carouselRef1 = useRef(null)
   const carouselRef2 = useRef(null)
-  const [selectedGenre, setSelectedGenre] = useState('로맨스'); // ✅ 초기값
+  const [selectedGenre, setSelectedGenre] = useState('로맨스'); 
 
   const scroll = (ref, direction) => {
     if (!ref.current) return;
@@ -16,17 +16,22 @@ function Home() {
     const distance = direction === 'left' ? -clientWidth : clientWidth;
     ref.current.scrollTo({ left: scrollLeft + distance, behavior: 'smooth' });
   };
-
+  
+  const navigate = useNavigate();
   const genres = ['로맨스', '판타지', '무협'];
   return (
     <div className="home-page">
       <header className="nav-bar">
         <div className="nav-content">
-          <button className="home-button">홈</button>
+          <button className="home-button"
+          onClick={() => navigate('/')}
+          >
+            홈
+          </button>
           <img src={logoImage} alt="Logo" className="logo-image" />
           <button
            className="register-button"
-           onClick={() => navigator('/publish')}
+           onClick={() => navigate('/publish')}
           >
             새 도서 등록
           </button>
@@ -51,11 +56,17 @@ function Home() {
           <button className="arrow" onClick={() => scroll(carouselRef1, 'left')}>←</button>
           <div className="book-list" ref={carouselRef1}>
             {[...Array(10)].map((_, i) => (
-              <div className="book-card" key={`pop-${i}`}>
+              <div
+                className="book-card"
+                key={`pop-${i}`}
+                onClick={() => navigate(`/view/${i + 1}`)}  
+                style={{ cursor: 'pointer' }}               
+              >
                 <div className="thumbnail">thumbnail</div>
                 <div className="book-title">도서 제목</div>
                 <div className="book-author">작가명</div>
               </div>
+
             ))}
           </div>
           <button className="arrow" onClick={() => scroll(carouselRef1, 'right')}>→</button>
@@ -68,11 +79,17 @@ function Home() {
           <button className="arrow" onClick={() => scroll(carouselRef2, 'left')}>←</button>
           <div className="book-list" ref={carouselRef2}>
             {[...Array(10)].map((_, i) => (
-              <div className="book-card" key={`new-${i}`}>
+              <div
+                className="book-card"
+                key={`pop-${i}`}
+                onClick={() => navigate(`/view/${i + 1}`)}  
+                style={{ cursor: 'pointer' }}            
+              >
                 <div className="thumbnail">thumbnail</div>
                 <div className="book-title">도서 제목</div>
                 <div className="book-author">작가명</div>
               </div>
+
             ))}
           </div>
           <button className="arrow" onClick={() => scroll(carouselRef2, 'right')}>→</button>
