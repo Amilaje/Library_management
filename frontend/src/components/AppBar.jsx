@@ -6,12 +6,13 @@ export default function Header() {
 
   return (
     <AppBar
-      position="static" // 페이지 상단에 고정
+      position="static" // 고정
       color="#ffffff"
       elevation={0} // 그림자 제거
       sx={{
         height: "100px", // 높이 고정
-        justifyContent: "center", // 요소들 수직 가운데 정렬
+        py: 4,
+        ifyContent: "center", // 요소들 수직 가운데 정렬
       }}>
       <Toolbar
         sx={{
