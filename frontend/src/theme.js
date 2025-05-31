@@ -112,24 +112,69 @@ const theme = createTheme({
         backgroundColor: "transparent",
       },
     },
-    MuiChip: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+        notchedOutline: {
+          borderWidth: "1.5px",
+        },
+        root: ({ theme }) => ({
+          borderRadius: 8,
+          "&:hover:not(.Mui-focused) .MuiOutlinedInput-notchedOutline": {
+            borderColor: theme.palette.divider,
+          },
+        }),
+        input: {
+          lineHeight: 1.7,
+        },
+      },
+    },
+    MuiInputLabel: {
       styleOverrides: {
         root: ({ theme }) => ({
-          fontWeight: 600,
-          fontSize: "0.875rem",
-          borderRadius: 8,
-          backgroundColor: theme.palette.background.default,
-          color: theme.palette.text.primary,
-          border: `1px solid ${theme.palette.divider}`,
-          boxShadow: "none",
-          transition: "all 0.2s ease-in-out",
-
-          "&.Mui-selected": {
-            backgroundColor: theme.palette.secondary.main,
-            border: `1px solid ${theme.palette.action.pressed}`,
-            color: theme.palette.action.pressed,
-            boxShadow: "0px 1px 3px rgba(33, 127, 122, 0.12)",
+          ...theme.typography.subtitle1,
+          "&.MuiInputLabel-shrink": {
+            ...theme.typography.subtitle1,
+            transform: "translate(18px, -10px) scale(0.75)",
           },
+        }),
+      },
+    },
+    MuiChip: {
+      defaultProps: {
+        clickable: true,
+        disableRipple: true,
+      },
+      styleOverrides: {
+        root: ({ theme }) => ({
+          ...theme.typography.button,
+          color: theme.palette.text.primary,
+          borderRadius: 999,
+          padding: "0 4px",
+          "&:hover": {
+            boxShadow: "none",
+          },
+          "&:active": {
+            boxShadow: "none",
+          },
+          "&.MuiChip-filledDefault": {
+            backgroundColor: theme.palette.primary.main,
+            color: "#ffffff",
+          },
+          "&.MuiChip-outlined": {
+            borderWidth: "1.5px",
+            color: theme.palette.text.secondary,
+          },
+        }),
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+        },
+        outlined: ({ theme }) => ({
+          border: `1.5px solid ${theme.palette.divider}`,
+          backgroundColor: theme.palette.background.paper,
         }),
       },
     },

@@ -1,30 +1,28 @@
-//제목, 저자, 내용 입력 필드드
-
-import React from 'react';
-import { TextField, Typography } from '@mui/material';
+import React from "react";
+import { Box, Typography, TextField } from "@mui/material";
 
 export default function TextInputField({
   label,
   value,
   onChange,
   multiline = false,
-  rows = 1
+  rows = 1,
 }) {
   return (
-    <>
-      <Typography gutterBottom sx={{ mt: multiline ? 3 : 2 }}>
-        {label}
-      </Typography>
+    <Box>
+      {label && (
+        <Typography variant="subtitle1" sx={{ mb: 1 }}>
+          {label}
+        </Typography>
+      )}
       <TextField
-        value={value}
-        onChange={e => onChange(e.target.value)}
         fullWidth
-        size="small"
         variant="outlined"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         multiline={multiline}
         rows={rows}
-        sx={{ bgcolor: '#f5f5f5' }} 
       />
-    </>
+    </Box>
   );
 }
