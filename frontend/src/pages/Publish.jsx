@@ -102,7 +102,7 @@ export default function Publish() {
             value={content}
             onChange={setContent}
             multiline
-            rows={12}
+            rows={20}
           />
           <TextInputField label="API Key" value={apiKey} onChange={setApiKey} />
           <Box sx={{ display: "flex", justifyContent: "center" }}>
