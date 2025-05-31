@@ -39,7 +39,7 @@ const View = () => {
 
   return (
     <div className="view-container">
-      <Header />  {/* ✅ 여기 공통 헤더 삽입 */}
+      <Header />  {/* 여기 공통 헤더 삽입 */}
 
       {/* 2. 책 이미지 + 설명 */}
       <div className="view-main">
@@ -54,6 +54,13 @@ const View = () => {
           <h2 className="book-title">{book.title}</h2>
           <p className="book-author">{book.author}</p>
           <p className="book-description">{book.synopsis}</p>
+          {book.genre && (
+            <p className="book-tags">
+              {book.genre.split(',').map((g, idx) => (
+                <span key={idx}>#{g.trim()} </span>
+              ))}
+            </p>
+          )}
         </div>
       </div>
 
