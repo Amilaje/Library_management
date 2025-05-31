@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <AppBar
       position="static" // 페이지 상단에 고정
-      color="inherit"
+      color="#ffffff"
       elevation={0} // 그림자 제거
       sx={{
         height: "100px", // 높이 고정
