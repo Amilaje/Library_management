@@ -50,7 +50,7 @@ export default function Header() {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => navigate("/publish")}>
+            onClick={() => (window.location.href = "/publish")}>
             새 도서 등록
           </Button>
         </Box>

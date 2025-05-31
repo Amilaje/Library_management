@@ -72,6 +72,13 @@ export default function Publish() {
         synopsis,
       });
       alert("게시 완료!");
+      setTitle("");
+      setAuthor("");
+      setContent("");
+      setGenre("");
+      setSynopsis("");
+      setApiKey("");
+      setCoverImage(null);
       navigate("/", { replace: true });
     } catch (error) {
       console.error("게시 실패:", error);
