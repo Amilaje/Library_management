@@ -3,25 +3,23 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#30aeaa",  // primary 색상 재정의
+      main: "#38b8b2",
+      light: "#7ed8d4",
+      dark: "#206a66",
+      contrastText: "#ffffff",
     },
-    secondary: {
-      main: "#c8e7e6",  // secondary 색상 재정의
+    error: {
+      main: "#ed212b",
     },
     text: {
-        primary: "#171717", 
-        secondary: "#9ca3af",
-    },
-    action: {
-        pressed: "#217f7a",
-    },
-    divider: "#e5e7eb",
-    error: {
-      main: "#ef4444",
+      primary: "#1f1f1f",
+      secondary: "#505050",
     },
     background: {
-      default: "#f2f2f2",
+      default: "#f4f7f7",
+      paper: "#ffffff",
     },
+    divider: "#c7e0df",
   },
   typography: {
     fontFamily: "'Pretendard', sans-serif",
@@ -69,15 +67,53 @@ const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 12,  // 기본 둥글기 조정
+    borderRadius: 12, // 기본 둥글기 조정
   },
   components: {
     MuiButton: {
+      defaultProps: {
+        variant: "contained",
+        color: "primary",
+        disableRipple: true,
+      },
       styleOverrides: {
         root: {
-          fontWeight: 600,
           borderRadius: 999,
+          textTransform: "none",
+          padding: "8px 20px",
+          boxShadow: "none",
+          transition: "background-color 0.2s ease, color 0.2s ease",
         },
+        contained: {
+          "&:hover": {
+            backgroundColor: "#57ccc6",
+          },
+          "&:active": {
+            backgroundColor: "#2c918c",
+          },
+        },
+        outlined: {
+          borderWidth: "2px",
+          backgroundColor: "transparent",
+        },
+        text: {
+          backgroundColor: "transparent",
+          "&:hover": {
+            backgroundColor: "transparent",
+          },
+          "&:active": {
+            backgroundColor: "transparent",
+          },
+        },
+      },
+    },
+    MuiIconButton: {
+      defaultProps: {
+        disableRipple: true,
+      },
+      styleOverrides: {
+        borderRadius: 999,
+        backgroundColor: "transparent",
       },
     },
     MuiChip: {
