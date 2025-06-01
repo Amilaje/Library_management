@@ -35,6 +35,10 @@ const View = () => {
     }
   };
 
+  const formatDate = (dateString) => {
+  return dateString ? dateString.slice(0, 10) : '알 수 없음';
+};
+
   if (!book) return <div className="view-container">로딩 중...</div>;
 
   return (
@@ -71,7 +75,7 @@ const View = () => {
       {/* 4. 하단 정보 */}
       <div className="view-footer">
         <span className="date-info">
-          작성일: {book.createdAt || '알 수 없음'} / 수정일: {book.updatedAt || '알 수 없음'}
+          작성일: {formatDate(book.createdAt)} / 수정일: {formatDate(book.updatedAt)}
         </span>
         <div className="view-actions">
           <button className="btn-edit" onClick={handleEdit}>수정</button>
