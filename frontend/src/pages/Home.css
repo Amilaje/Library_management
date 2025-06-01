@@ -1,15 +1,15 @@
 .home-page {
   background-color: #ffffff;
-  padding: 20px;
+  padding: 0 20px; /* 상단 여백 제거 */
   font-family: Arial, sans-serif;
   max-width: 1200px;
   margin: 0 auto;
 }
 
+
 .nav-bar {
   border-bottom: 2px solid #ccc;
-  padding: 10px 0;
-  margin-bottom: 20px;
+  padding: 4px 0;
   position: relative;
 }
 
@@ -87,8 +87,12 @@
   font-weight: bold;
 }
 
+.section-genres {
+  margin-bottom: 16px;
+}
+
 .book-section {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .book-section h2 {
@@ -118,8 +122,8 @@
 }
 
 .book-card {
-  min-width: 150px;
-  max-width: 150px;
+  min-width: 120px;  
+  max-width: 120px;
   text-align: center;
 }
 
