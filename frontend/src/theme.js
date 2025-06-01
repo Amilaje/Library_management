@@ -92,15 +92,15 @@ const theme = createTheme({
           borderWidth: "2px",
           backgroundColor: "transparent",
         },
-        text: {
-          backgroundColor: "transparent",
+        text: ({ theme }) => ({
+          color: theme.palette.text.primary,
           "&:hover": {
             backgroundColor: "transparent",
           },
           "&:active": {
             backgroundColor: "transparent",
           },
-        },
+        }),
       },
     },
     MuiIconButton: {
@@ -175,6 +175,19 @@ const theme = createTheme({
         outlined: ({ theme }) => ({
           border: `1.5px solid ${theme.palette.divider}`,
           backgroundColor: theme.palette.background.paper,
+        }),
+      },
+    },
+    MuiPagination: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          ...theme.typography.caption,
+          "&.Mui-selected": {
+            backgroundColor: theme.palette.primary.main,
+          },
+          "&.hover": {
+            backgroundColor: "#f9f9f9",
+          },
         }),
       },
     },

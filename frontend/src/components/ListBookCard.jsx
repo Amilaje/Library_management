@@ -8,36 +8,51 @@ export default function BookCard({ book, onClick }) {
       sx={{
         display: "flex",
         cursor: "pointer",
-        mb: 3,
+        py: 1.5,
         "&:hover": { backgroundColor: "#f9f9f9" },
-      }}
-    >
-      <img
-        src={book.coverImageUrl}
-        alt={book.title}
-        style={{
-          width: "100px",
-          height: "140px",
+      }}>
+      {/*왼쪽 이미지 영역*/}
+      <Box
+        sx={{
+          width: "160px",
+          minWidth: "160px",
+          height: "160px",
           borderRadius: "8px",
-          objectFit: "cover",
-          marginRight: "1.5rem",
-        }}
-      />
-      <Box>
-        <Typography variant="h6" gutterBottom>{book.title}</Typography>
-        <Typography variant="body2">작가: {book.author}</Typography>
-        <Typography variant="body2">조회수: {book.viewCount}</Typography>
+          overflow: "hidden",
+          marginRight: "1rem",
+        }}>
+        <img
+          src={book.coverImageUrl}
+          alt={book.title}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+        />
+      </Box>
+      {/*오른쪽 텍스트 영역*/}
+      <Box sx={{ flex: 1 }}>
+        <Typography variant="h2" sx={{ mb: 1.5 }}>
+          {book.title}
+        </Typography>
+        <Box
+          sx={{ display: "flex", flexDirection: "column", gap: 0.5, mb: 1.5 }}>
+          <Typography variant="body2">작가: {book.author}</Typography>
+          <Typography variant="body2">조회수: {book.viewCount}</Typography>
+        </Box>
         <Typography
-          variant="body2"
-          sx={{
-            color: "#555",
+          variant="body1"
+          sx={(theme) => ({
             overflow: "hidden",
             display: "-webkit-box",
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: "vertical"
-          }}
-        >
-          {book.synopsis?.trim() ? book.synopsis : "요약 없음"}
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            color: !book.synopsis?.trim()
+              ? theme.palette.text.secondary
+              : "inherit",
+          })}>
+          {book.synopsis?.trim() ? book.synopsis : "시놉시스 없음"}
         </Typography>
       </Box>
     </Box>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Button, Typography, Container, Pagination } from "@mui/material";
 import axios from "../services/axios";
 
+import GenreButton from "../components/GenreButton";
 import ListBookCard from "../components/ListBookCard";
 
 const genres = [
@@ -28,6 +29,11 @@ export default function List() {
     setCurrentPage(1);
   }, [selectedGenre]);
 
+  // 페이지 변경 시 상단으로 스크롤
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
+
   // API 호출
   useEffect(() => {
     const fetchBooks = async () => {
@@ -51,30 +57,17 @@ export default function List() {
   const totalPages = Math.ceil(books.length / itemsPerPage);
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container maxWidth="lg">
       {/* 장르 선택 버튼 */}
-      <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
-        {genres.map((genre) => {
-          const isAll = genre === "전체";
-          const genreValue = isAll ? "" : genre;
-
-          return (
-            <Button
-              key={genre}
-              variant={selectedGenre === genre ? "contained" : "outlined"}
-              onClick={() => {
-                if (selectedGenre !== genre) {
-                  setSelectedGenre(genre);
-                }
-              }}
-              sx={{
-                fontWeight: selectedGenre === genre ? "bold" : "normal",
-                borderRadius: 4,
-              }}>
-              {genre}
-            </Button>
-          );
-        })}
+      <Box sx={{ display: "flex", gap: 1, mb: 4 }}>
+        {genres.map((genre) => (
+          <GenreButton
+            key={genre}
+            genre={genre}
+            selectedGenre={selectedGenre}
+            setSelectedGenre={setSelectedGenre}
+          />
+        ))}
       </Box>
 
       {/* 도서 카드 목록 */}
@@ -87,8 +80,16 @@ export default function List() {
       ))}
 
       {/* 도서 없음 */}
-      {books.length === 0 && (
-        <Typography variant="subtitle1">게시된 작품이 없습니다.</Typography>
+      {currentBooks.length === 0 && (
+        <Box
+          sx={{
+            mt: 6,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+          <Typography variant="subtitle1">게시된 작품이 없습니다.</Typography>
+        </Box>
       )}
 
       {/* 페이지네이션 */}
