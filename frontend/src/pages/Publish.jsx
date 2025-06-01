@@ -121,7 +121,7 @@ export default function Publish() {
             </Button>
           </Box>
           <Box sx={{ display: "flex", gap: 3, alignItems: "flex-start" }}>
-            {/* 왼쪽:  표지 */}
+            {/* 왼쪽:  표지 이미지 */}
             <CoverPreview url={coverImage} />
             {/* 오른쪽: 시놉시스 */}
             <Box sx={{ flex: 1 }}>
