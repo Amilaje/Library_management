@@ -15,7 +15,7 @@ export default function Router() {
         <Route path="/publish" element={<Publish />} />
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/view/:id" element={<View />} />
-        <Route path="/list" element={<List />} /> {/* 임시추가 */}
+        <Route path="/list" element={<List />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
