@@ -8,10 +8,10 @@ import ListBookCard from "../components/ListBookCard";
 
 const genres = [
   "전체",
-  "SF/과학",
+  "SF·과학",
   "판타지",
   "공포",
-  "미스터리/스릴러",
+  "미스터리·스릴러",
   "역사",
   "로맨스",
   "무협",
