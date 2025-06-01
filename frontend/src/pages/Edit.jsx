@@ -20,10 +20,10 @@ export default function Publish() {
   const [loading, setLoading] = useState(false);
 
   const genres = [
-    "SF-과학",
+    "SF·과학",
     "판타지",
     "공포",
-    "미스터리-스릴러",
+    "미스터리·스릴러",
     "역사",
     "로맨스",
     "무협",
@@ -90,6 +90,7 @@ export default function Publish() {
         content,
         genre,
         synopsis,
+        coverImageUrl: coverImage,
       });
       alert("수정 완료!");
       navigate(`/view/${id}`, { replace: true });
