@@ -39,7 +39,6 @@ const View = () => {
 
   return (
     <div className="view-container">
-      <Header />  {/* 여기 공통 헤더 삽입 */}
 
       {/* 2. 책 이미지 + 설명 */}
       <div className="view-main">

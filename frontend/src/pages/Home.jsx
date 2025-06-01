@@ -34,24 +34,6 @@ function Home() {
 
   return (
     <div className="home-page">
-      <header className="nav-bar">
-        <div className="nav-content">
-          <button className="home-button" onClick={() => navigate('/')}>
-            <img src={homeLogo} alt="홈" className="home-logo" />
-          </button>
-          <button className="list-button" onClick={() => navigate('/list')}>
-            전체 목록
-          </button>
-          <img src={logoImage} alt="Logo" className="logo-image" />
-          <button
-            className="register-button"
-            onClick={() => navigate('/publish')}
-          >
-            새 도서 등록
-          </button>
-        </div>
-      </header>
-
       <div className="category-tabs">
         {genres.map((genre) => (
           <button
