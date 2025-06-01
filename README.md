@@ -88,7 +88,6 @@ Spring Boot와 React를 활용한 도서 관리 시스템입니다.
   - 도서 목록 조회 및 상세 페이지 이동
   - 도서 등록 시 AI 서버 연동 → 줄거리 요약 + 표지 이미지 생성
 - 상태 관리: `useState`, `useEffect`, `props` 기반
-- 포트 설정: `.env`로 `PORT=3001` 지정 (Spring과 충돌 방지)
 - 프록시 설정: `package.json`에 `"proxy": "http://localhost:8080"` 지정 → 백엔드 연동 자동화
 
 ---
@@ -106,7 +105,6 @@ Spring Boot와 React를 활용한 도서 관리 시스템입니다.
   - `DELETE /api/books/{id}` → 도서 삭제
   - `POST /api/books/generate-cover` → GPT 기반 줄거리 요약 + 이미지 생성
   - `POST /api/books/{id}/generate-cover` → 기존 도서 기반 이미지 재생성
-- 테스트: Postman으로 전체 기능 검증 완료
 - API 응답: JSON 기반, 프론트엔드와 직관적 연동 가능
 
 ---
