@@ -81,8 +81,8 @@ export default function Publish() {
       setCoverImage(null);
       navigate("/", { replace: true });
     } catch (error) {
-      console.error("게시 실패:", error);
-      alert("게시에 실패했습니다. 다시 시도해주세요.");
+      console.error("작품 게시 실패:", error);
+      alert("작품 게시에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
