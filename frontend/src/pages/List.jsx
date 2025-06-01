@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { Box, Container, Pagination, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Typography, Container, Pagination } from "@mui/material";
-import axios from "../services/axios";
-
 import GenreButton from "../components/GenreButton";
 import ListBookCard from "../components/ListBookCard";
-//
+import axios from "../services/axios";
+
 const genres = [
   "전체",
   "SF·과학",
@@ -43,10 +42,10 @@ export default function List() {
         const response = await axios.get(url);
         setBooks(response.data);
       } catch (error) {
-        console.error("도서 목록 불러오기 실패: ", error);
+        console.error("도서 목록 로드 실패: ", error);
+        alert("도서 목록을 불러오지 못했습니다.");
       }
     };
-
     fetchBooks();
   }, [selectedGenre]);
 
@@ -88,7 +87,7 @@ export default function List() {
             justifyContent: "center",
             alignItems: "center",
           }}>
-          <Typography variant="subtitle1">게시된 작품이 없습니다.</Typography>
+          <Typography variant="subtitle1">게시된 도서가 없습니다.</Typography>
         </Box>
       )}
 
