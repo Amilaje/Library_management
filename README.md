@@ -58,9 +58,6 @@ Spring Boot와 React를 활용한 도서 관리 시스템입니다.
 
 **Backend**:  
 - Java 17, Spring Boot, Gradle, JPA  
-- 기타:
-  - WebFlux: REST 기반 API만 사용하는 경우 제거 가능  
-  - Mustache: 템플릿 미사용 시 Gradle 의존성에서 제거 권장
 
 **Database**:  
 - H2 (인메모리 DB, 개발용)
