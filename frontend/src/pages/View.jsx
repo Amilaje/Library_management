@@ -5,7 +5,6 @@ import BookContent from "../components/BookContent";
 import BookFooter from "../components/BookFooter";
 import BookHeader from "../components/BookHeader";
 import axios from "../services/axios";
-import "./View.css";
 
 const View = () => {
   const navigate = useNavigate();
