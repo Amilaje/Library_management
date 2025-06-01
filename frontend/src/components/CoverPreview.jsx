@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Paper, Typography, CircularProgress } from "@mui/material";
+import { CircularProgress, Paper, Typography } from "@mui/material";
+import { useState } from "react";
 
 export default function CoverPreview({ url }) {
   const [loading, setLoading] = useState(true);
@@ -9,8 +9,8 @@ export default function CoverPreview({ url }) {
     <Paper
       variant="outlined"
       sx={{
-        width: 360,
-        height: 360,
+        width: 374,
+        height: 374,
         borderStyle: "dashed",
         display: "flex",
         alignItems: "center",
@@ -19,7 +19,7 @@ export default function CoverPreview({ url }) {
         position: "relative",
       }}>
       {!url ? (
-        <Typography variant="subtitle1">표지 미리보기</Typography>
+        <Typography variant="subtitle1">AI 표지</Typography>
       ) : error ? (
         <Typography variant="subtitle1">이미지 로드 실패</Typography>
       ) : (
@@ -27,7 +27,7 @@ export default function CoverPreview({ url }) {
           {loading && <CircularProgress />}
           <img
             src={url}
-            alt="표지"
+            alt="생성된 표지 이미지"
             style={{
               width: "100%",
               height: "100%",
