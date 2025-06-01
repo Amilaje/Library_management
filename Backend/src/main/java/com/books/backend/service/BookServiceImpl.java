@@ -35,6 +35,8 @@ public class BookServiceImpl implements BookService {
                 .author(request.getAuthor())
                 .genre(request.getGenre())
                 .content(request.getContent())
+                .synopsis(request.getSynopsis())
+                .coverImageUrl(request.getCoverImageUrl())
                 .viewCount(0) // 초기 조회수는 0으로 설정
                 .build();
 
@@ -83,6 +85,8 @@ public class BookServiceImpl implements BookService {
         book.setAuthor(request.getAuthor());
         book.setGenre(request.getGenre());
         book.setContent(request.getContent());
+        book.setSynopsis(request.getSynopsis());
+        book.setCoverImageUrl(request.getCoverImageUrl());
 
         Book updated = bookRepository.save(book);
         return toDetailResponse(updated);
