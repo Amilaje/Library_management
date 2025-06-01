@@ -70,6 +70,7 @@ export default function Publish() {
         content,
         genre,
         synopsis,
+        coverImageUrl: coverImage,
       });
       alert("게시 완료!");
       setTitle("");
