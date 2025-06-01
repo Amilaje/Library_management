@@ -11,9 +11,11 @@ import lombok.Setter;
 @Setter
 public class BookCreateRequest {
 
-    private String title;       // 도서 제목
-    private String author;      // 저자
-    private String genre;       // 장르 (예: Fantasy)
-    private String content;     // 도서 내용 (본문)
+    private String title;         // 도서 제목
+    private String author;        // 저자
+    private String genre;         // 장르
+    private String content;       // 도서 내용 (본문)
+    private String synopsis;      // 시놉시스
+    private String coverImageUrl; // 표지 이미지 URL (AI 생성)
 
 }
