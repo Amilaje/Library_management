@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Box, Button, Typography, Container, Pagination } from "@mui/material";
 import axios from "../services/axios";
-import { Box, Button, Typography } from "@mui/material";
 
-const genres = ["로맨스", "스릴러", "SF", "공포"];
+import GenreButton from "../components/GenreButton";
+import ListBookCard from "../components/ListBookCard";
+
+const genres = [
+  "전체",
+  "SF/과학",
+  "판타지",
+  "공포",
+  "미스터리/스릴러",
+  "역사",
+  "로맨스",
+  "무협",
+];
 
 export default function List() {
-  const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState("전체");
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -17,15 +29,21 @@ export default function List() {
     setCurrentPage(1);
   }, [selectedGenre]);
 
+  // 페이지 변경 시 상단으로 스크롤
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
+
   // API 호출
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const url = selectedGenre ? `/books/genre/${selectedGenre}` : "/books";
+        const genreValue = selectedGenre === "전체" ? "" : selectedGenre;
+        const url = genreValue ? `/books/genre/${selectedGenre}` : "/books";
         const response = await axios.get(url);
         setBooks(response.data);
       } catch (error) {
-        console.error("도서 목록 불러오기 실패:", error);
+        console.error("도서 목록 불러오기 실패: ", error);
       }
     };
 
@@ -39,82 +57,52 @@ export default function List() {
   const totalPages = Math.ceil(books.length / itemsPerPage);
 
   return (
-    <Box sx={{ padding: "2rem" }}>
+    <Container maxWidth="lg">
       {/* 장르 선택 버튼 */}
-      <Box sx={{ marginBottom: "1.5rem" }}>
+      <Box sx={{ display: "flex", gap: 1, mb: 4 }}>
         {genres.map((genre) => (
-          <Button
+          <GenreButton
             key={genre}
-            onClick={() => setSelectedGenre(genre === selectedGenre ? "" : genre)}
-            sx={{
-              marginRight: "1rem",
-              fontWeight: selectedGenre === genre ? "bold" : "normal",
-              textDecoration: selectedGenre === genre ? "underline" : "none",
-              color: selectedGenre === genre ? "black" : "#888"
-            }}
-          >
-            {genre}
-          </Button>
+            genre={genre}
+            selectedGenre={selectedGenre}
+            setSelectedGenre={setSelectedGenre}
+          />
         ))}
       </Box>
 
       {/* 도서 카드 목록 */}
       {currentBooks.map((book) => (
-        <Box key={book.id} onClick={() => navigate(`/view/${book.id}`)} sx={{ display: "flex", marginBottom: "2rem", cursor: "pointer", "&:hover": { backgroundColor: "#f9f9f9" }}}>
-          <img
-            src={book.coverImageUrl}
-            alt={book.title}
-            style={{
-              width: "100px",
-              height: "140px",
-              borderRadius: "8px",
-              objectFit: "cover",
-              marginRight: "1.5rem"
-            }}
-          />
-          <Box>
-            <Typography variant="h6" gutterBottom>{book.title}</Typography>
-            <Typography variant="body2">작가: {book.author}</Typography>
-            <Typography variant="body2">조회수: {book.viewCount}</Typography>
-            <Typography variant="subtitle2" sx={{ mt: 1, fontWeight: 'bold' }}>
-              줄거리
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{
-                color: "#555",
-                overflow: "hidden",
-                display: "-webkit-box",
-                WebkitLineClamp: 3,
-                WebkitBoxOrient: "vertical"
-              }}
-            >
-              {book.synopsis?.trim() ? book.synopsis : "요약 없음"}
-            </Typography>
-          </Box>
-        </Box>
+        <ListBookCard
+          key={book.id}
+          book={book}
+          onClick={() => navigate(`/view/${book.id}`)}
+        />
       ))}
 
       {/* 도서 없음 */}
-      {books.length === 0 && (
-        <Typography sx={{ color: "#aaa" }}>도서가 없습니다.</Typography>
+      {currentBooks.length === 0 && (
+        <Box
+          sx={{
+            mt: 6,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+          <Typography variant="subtitle1">게시된 작품이 없습니다.</Typography>
+        </Box>
       )}
 
       {/* 페이지네이션 */}
       {totalPages >= 1 && (
-        <Box sx={{ mt: 4, display: "flex", justifyContent: "center", gap: 1 }}>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <Button
-              key={i + 1}
-              variant={i + 1 === currentPage ? "contained" : "outlined"}
-              size="small"
-              onClick={() => setCurrentPage(i + 1)}
-            >
-              {i + 1}
-            </Button>
-          ))}
+        <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(_, page) => setCurrentPage(page)}
+            color="primary"
+          />
         </Box>
       )}
-    </Box>
+    </Container>
   );
 }

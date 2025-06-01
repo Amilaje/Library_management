@@ -1,108 +1,136 @@
- import React, { useState } from 'react';
-import { Box, Container, Button } from '@mui/material';
-import Header from '../components/Header';
-import TextInputField from '../components/TextInputField';
-import GenreSelector from '../components/GenreSelector';
-import CoverPreview from '../components/CoverPreview';
-import SubmitButton from '../components/SubmitButton';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Container, Button, Box, Stack, TextField } from "@mui/material";
+import axios from "../services/axios";
+
+import TextInputField from "../components/TextInputField";
+import GenreSelector from "../components/GenreSelector";
+import CoverPreview from "../components/CoverPreview";
+
 export default function Publish() {
-
-
-  // 1) 상태 선언
-  const [title, setTitle]       = useState('');
-  const [author, setAuthor]     = useState('');
-  const [genres, setGenres]     = useState([]);
-  const [content, setContent]   = useState('');
-  const [apiKey, setApiKey]     = useState('');
+  const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [content, setContent] = useState("");
+  const [genre, setGenre] = useState("");
+  const [synopsis, setSynopsis] = useState("");
+  const [apiKey, setApiKey] = useState("");
   const [coverImage, setCoverImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  // 2) 장르 리스트 (한글 라벨)
-  const GENRES = [
-    { value: 'Novel',     label: '소설' },
-    { value: 'Romance',   label: '로맨스' },
-    { value: 'Mystery',   label: '추리·미스터리' },
-    { value: 'Fantasy',   label: '판타지' },
-    { value: 'SelfHelp',  label: '자기계발' },
-    { value: 'History',   label: '역사' },
-    { value: 'Science',   label: '과학' },
-    { value: 'Philosophy',label: '철학' },
-    { value: 'Poetry',    label: '시' },
-    { value: 'Essay',     label: '에세이' },
-    { value: 'Children',  label: '아동문학' },
-    { value: 'Art',       label: '예술' }
+  const genres = [
+    "SF/과학",
+    "판타지",
+    "공포",
+    "미스터리/스릴러",
+    "역사",
+    "로맨스",
+    "무협",
   ];
 
-  // 3) 최대 2개 선택
-  const handleGenreSelect = val => {
-    if (genres.includes(val)) {
-      setGenres(genres.filter(g => g !== val));
-    } else if (genres.length < 2) {
-      setGenres([...genres, val]);
+  // 장르 선택
+  const handleGenreSelect = (clicked) => {
+    setGenre((prev) => (prev === clicked ? "" : clicked));
+  };
+
+  // AI 표지 생성
+  const handleGenerateCover = async () => {
+    if (!title || !content || !apiKey) {
+      alert("제목, 내용, OpenAI 키를 모두 입력해주세요.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await axios.post("/books/generate-cover", {
+        title,
+        content,
+        apikey: apiKey,
+      });
+      const { coverImageURL, synopsis } = response.data;
+      setCoverImage(coverImageURL);
+      setSynopsis(synopsis);
+    } catch (error) {
+      console.error("표지 생성 실패:", error);
+      alert("표지 생성에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  // 4) AI 표지 생성 (추후 API 연동)
-  const handleGenerateCover = () => {
-    // placeholder 이미지
-    setCoverImage('https://placehold.co/240x240?text=AI+Cover');
-  };
-
-  // 5) 등록 (나중에 axios로 연동)
-  const handleRegister = () => {
-    console.log({ title, author, genres, content, apiKey, coverImage });
-    alert('등록 클릭! (콘솔 로그 확인)');
+  // 게시
+  const handlePublish = async () => {
+    if (!title || !author || !content || !genre) {
+      alert("모든 항목을 입력해주세요.");
+      return;
+    }
+    try {
+      const response = await axios.post("/books", {
+        title,
+        author,
+        content,
+        genre,
+        synopsis,
+      });
+      alert("게시 완료!");
+      setTitle("");
+      setAuthor("");
+      setContent("");
+      setGenre("");
+      setSynopsis("");
+      setApiKey("");
+      setCoverImage(null);
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.error("작품 게시 실패:", error);
+      alert("작품 게시에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: '#fafafa' }}>
-      <Header />
-
+    <Box sx={{ minHeight: "100vh" }}>
       <Container maxWidth="md">
-        <TextInputField label="제목" value={title} onChange={setTitle} />
-        <TextInputField label="작가명" value={author} onChange={setAuthor} />
-
-        <GenreSelector
-          genres={GENRES}
-          selected={genres}
-          onSelect={handleGenreSelect}
-        />
-
-        <TextInputField
-          label="내용"
-          value={content}
-          onChange={setContent}
-          multiline
-          rows={8}
-        />
-
-        <TextInputField
-          label="API Key"
-          value={apiKey}
-          onChange={setApiKey}
-        />
-
-        {/* 표지 생성 버튼 */}
-        <Box sx={{ textAlign: 'center', mt: 2 }}>
-          <Button
-            onClick={handleGenerateCover}
-            sx={{
-              textTransform: 'none',
-              bgcolor: '#26a69a',
-              color: '#fff',
-              borderRadius: '20px',
-              px: 3,
-              py: 1
-            }}
-          >
-            표지 생성
-          </Button>
-        </Box>
-
-        <CoverPreview url={coverImage} />
-
-        <SubmitButton onClick={handleRegister} />
+        <Stack spacing={3}>
+          <TextInputField label="제목" value={title} onChange={setTitle} />
+          <TextInputField label="작가명" value={author} onChange={setAuthor} />
+          <GenreSelector
+            genres={genres}
+            selected={genre}
+            onSelect={handleGenreSelect}
+          />
+          <TextInputField
+            label="내용"
+            value={content}
+            onChange={setContent}
+            multiline
+            rows={20}
+          />
+          <TextInputField label="API Key" value={apiKey} onChange={setApiKey} />
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Button onClick={handleGenerateCover} disabled={loading}>
+              {loading ? "생성 중" : "AI 표지 만들기"}
+            </Button>
+          </Box>
+          <Box sx={{ display: "flex", gap: 3, alignItems: "flex-start" }}>
+            {/* 왼쪽:  표지 */}
+            <CoverPreview url={coverImage} />
+            {/* 오른쪽: 시놉시스 */}
+            <Box sx={{ flex: 1 }}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                label="시놉시스"
+                value={synopsis}
+                onChange={(e) => setSynopsis(e.target.value)}
+                multiline
+                rows={8}
+              />
+            </Box>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Button onClick={handlePublish}>게시하기</Button>
+          </Box>
+        </Stack>
       </Container>
     </Box>
   );
-
 }
