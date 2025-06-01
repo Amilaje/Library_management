@@ -1,4 +1,5 @@
 .home-page {
+  background-color: #ffffff;
   padding: 20px;
   font-family: Arial, sans-serif;
   max-width: 1200px;
@@ -35,6 +36,25 @@
   font-weight: bold;
   padding: 8px 16px;
 }
+
+.home-logo {
+  height: 24px;
+  vertical-align: middle;
+}
+
+
+.list-button {
+  position: absolute;
+  left: 70px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #00a693;
+  font-weight: bold;
+  padding: 8px 16px;
+}
+
 
 .register-button {
   position: absolute;
