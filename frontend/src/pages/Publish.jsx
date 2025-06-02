@@ -1,21 +1,28 @@
-import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  Stack,
+} from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Button, Box, Stack, TextField } from "@mui/material";
-import axios from "../services/axios";
-
-import TextInputField from "../components/TextInputField";
-import GenreSelector from "../components/GenreSelector";
 import CoverPreview from "../components/CoverPreview";
+import GenreSelector from "../components/GenreSelector";
+import TextInputField from "../components/TextInputField";
+import axios from "../services/axios";
 
 export default function Publish() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
-  const [content, setContent] = useState("");
   const [genre, setGenre] = useState("");
-  const [synopsis, setSynopsis] = useState("");
+  const [content, setContent] = useState("");
   const [apiKey, setApiKey] = useState("");
   const [coverImage, setCoverImage] = useState(null);
+  const [synopsis, setSynopsis] = useState("");
   const [loading, setLoading] = useState(false);
 
   const genres = [
@@ -33,7 +40,7 @@ export default function Publish() {
     setGenre((prev) => (prev === clicked ? "" : clicked));
   };
 
-  // AI 표지 생성
+  // AI 표지 이미지 및 시놉시스 생성
   const handleGenerateCover = async () => {
     if (!title || !content || !apiKey) {
       alert("제목, 내용, OpenAI 키를 모두 입력해주세요.");
@@ -64,7 +71,7 @@ export default function Publish() {
       return;
     }
     try {
-      const response = await axios.post("/books", {
+      await axios.post("/books", {
         title,
         author,
         content,
@@ -75,11 +82,11 @@ export default function Publish() {
       alert("게시 완료!");
       setTitle("");
       setAuthor("");
-      setContent("");
       setGenre("");
-      setSynopsis("");
+      setContent("");
       setApiKey("");
       setCoverImage(null);
+      setSynopsis("");
       navigate("/", { replace: true });
     } catch (error) {
       console.error("작품 게시 실패:", error);
@@ -103,28 +110,33 @@ export default function Publish() {
             value={content}
             onChange={setContent}
             multiline
-            rows={20}
+            rows={24}
           />
           <TextInputField label="API Key" value={apiKey} onChange={setApiKey} />
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Button onClick={handleGenerateCover} disabled={loading}>
+            <Button
+              onClick={handleGenerateCover}
+              disabled={loading || !title || !content || !apiKey}>
               {loading ? "생성 중" : "AI 표지 만들기"}
             </Button>
           </Box>
           <Box sx={{ display: "flex", gap: 3, alignItems: "flex-start" }}>
-            {/* 왼쪽:  표지 */}
+            {/* 왼쪽:  표지 이미지 */}
             <CoverPreview url={coverImage} />
             {/* 오른쪽: 시놉시스 */}
             <Box sx={{ flex: 1 }}>
-              <TextField
-                fullWidth
-                variant="outlined"
-                label="시놉시스"
-                value={synopsis}
-                onChange={(e) => setSynopsis(e.target.value)}
-                multiline
-                rows={8}
-              />
+              <FormControl fullWidth>
+                <InputLabel shrink>시놉시스</InputLabel>
+                <OutlinedInput
+                  multiline
+                  rows={11}
+                  value={synopsis}
+                  onChange={(e) => setSynopsis(e.target.value)}
+                  placeholder="AI가 생성한 시놉시스가 이곳에 표시됩니다."
+                  label="시놉시스"
+                  notched
+                />
+              </FormControl>
             </Box>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center" }}>

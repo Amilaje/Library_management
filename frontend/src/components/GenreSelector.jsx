@@ -1,10 +1,9 @@
-import React from "react";
-import { Box, Typography, Stack, Chip } from "@mui/material";
+import { Box, Chip, Stack, Typography } from "@mui/material";
 
 export default function GenreSelector({ genres, selected, onSelect }) {
   return (
     <Box>
-      <Typography variant="subtitle1" sx={{ mb: 1 }}>
+      <Typography variant="subtitle1" sx={{ ml: 1, mb: 1 }}>
         장르
       </Typography>
       <Stack direction="row" spacing={1} flexWrap="wrap">

@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Typography } from "@mui/material";
 
 export default function BookCard({ book, onClick }) {
@@ -9,7 +8,7 @@ export default function BookCard({ book, onClick }) {
         display: "flex",
         cursor: "pointer",
         py: 1.5,
-        alignItems: "center",
+        alignItems: "flex-start",
         "&:hover": { backgroundColor: "#f9f9f9" },
       }}>
       {/*왼쪽 이미지 영역*/}
@@ -18,13 +17,15 @@ export default function BookCard({ book, onClick }) {
           width: "120px",
           minWidth: "120px",
           height: "180px",
-          borderRadius: "8px",
           overflow: "hidden",
-          marginRight: "1rem",
+          marginRight: "1.5rem",
         }}>
         <img
-          src={book.coverImageUrl}
-          alt={book.title}
+          src={
+            book.coverImageUrl ||
+            "https://via.placeholder.com/220x300?text=Book+Cover"
+          }
+          alt={book.title || "책 표지"}
           style={{
             width: "100%",
             height: "100%",
@@ -33,7 +34,7 @@ export default function BookCard({ book, onClick }) {
         />
       </Box>
       {/*오른쪽 텍스트 영역*/}
-      <Box sx={{ flex: 1 }}>
+      <Box sx={{ flex: 1, mt: 1 }}>
         <Typography variant="h2" sx={{ mb: 1.5 }}>
           {book.title}
         </Typography>

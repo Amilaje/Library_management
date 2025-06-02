@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "@mui/material";
 
 export default function GenreButton({
@@ -22,13 +21,11 @@ export default function GenreButton({
         color: isSelected
           ? theme.palette.primary.main
           : theme.palette.text.primary,
-        borderRadius: 4,
         backgroundColor: "transparent",
         transition: "none",
-
         textDecoration: isSelected ? "underline" : "none",
         textDecorationThickness: "2px",
-        textUnderlineOffset: "6px", // 밑줄과 텍스트 간격 조절
+        textUnderlineOffset: "6px",
         "&:hover": {
           color: theme.palette.primary.main,
           backgroundColor: "transparent",

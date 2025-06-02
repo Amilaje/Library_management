@@ -1,8 +1,10 @@
-import './View.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Box, Button, Container, Stack } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import BookContent from "../components/BookContent";
+import BookFooter from "../components/BookFooter";
+import BookHeader from "../components/BookHeader";
 import axios from "../services/axios";
-import { useEffect, useState } from 'react';
-import Header from '../components/AppBar';  // ← 상단 헤더 import 추가
 
 const View = () => {
   const navigate = useNavigate();
@@ -10,11 +12,12 @@ const View = () => {
   const [book, setBook] = useState(null);
 
   useEffect(() => {
-    axios.get(`/books/${id}`)
+    axios
+      .get(`/books/${id}`)
       .then((res) => setBook(res.data))
-      .catch((err) => {
-        console.error('책 정보를 불러오는 데 실패했습니다:', err);
-        alert('책 정보를 불러오지 못했습니다.');
+      .catch((error) => {
+        console.error("책 정보 로드 실패:", error);
+        alert("책 정보를 불러오지 못했습니다.");
       });
   }, [id]);
 
@@ -23,66 +26,55 @@ const View = () => {
   };
 
   const handleDelete = async () => {
-    if (window.confirm('정말 삭제하시겠습니까?')) {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
         await axios.delete(`/books/${id}`);
-        alert('삭제되었습니다.');
-        navigate('/');
+        alert("삭제되었습니다.");
+        navigate("/", { replace: true });
       } catch (error) {
-        console.error('삭제 실패:', error);
-        alert('삭제에 실패했습니다.');
+        console.error("삭제 실패:", error);
+        alert("삭제에 실패했습니다. 다시 시도해주세요.");
       }
     }
   };
 
-  const formatDate = (dateString) => {
-  return dateString ? dateString.slice(0, 10) : '알 수 없음';
-};
+  const formatDate = (dateString) => dateString?.slice(0, 10) || "알 수 없음";
 
-  if (!book) return <div className="view-container">로딩 중...</div>;
+  if (!book) return <Container sx={{ py: 4 }}>로딩 중...</Container>;
 
   return (
-    <div className="view-container">
-
-      {/* 2. 책 이미지 + 설명 */}
-      <div className="view-main">
-        <div className="view-image-box">
-          <img
-            className="view-book-cover"
-            src={book.coverImageUrl || 'https://via.placeholder.com/220x300?text=Book+Cover'}
-            alt={book.title || "책 표지"}
-          />
-        </div>
-        <div className="view-info-box">
-          <h2 className="book-title">{book.title}</h2>
-          <p className="book-author">{book.author}</p>
-          <p className="book-description">{book.synopsis}</p>
-          {book.genre && (
-            <p className="book-tags">
-              {book.genre.split(',').map((g, idx) => (
-                <span key={idx}>#{g.trim()} </span>
-              ))}
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* 3. 본문 내용 */}
-      <div className="view-content-box">
-        {book.content}
-      </div>
-
-      {/* 4. 하단 정보 */}
-      <div className="view-footer">
-        <span className="date-info">
-          작성일: {formatDate(book.createdAt)} / 수정일: {formatDate(book.updatedAt)}
-        </span>
-        <div className="view-actions">
-          <button className="btn-edit" onClick={handleEdit}>수정</button>
-          <button className="btn-delete" onClick={handleDelete}>삭제</button>
-        </div>
-      </div>
-    </div>
+    <Container sx={{ py: 4 }}>
+      <Stack>
+        {/* 책 표지 + 기본 정보 */}
+        <Box sx={{ mb: 4 }}>
+          <BookHeader book={book} />
+        </Box>
+        {/* 책 내용 */}
+        <Box sx={{ mb: 2 }}>
+          <BookContent content={book.content} />
+        </Box>
+        {/* 하단 정보 */}
+        <Box sx={{ mb: 3 }}>
+          <BookFooter createdAt={book.createdAt} updatedAt={book.updatedAt} />
+        </Box>
+        {/* 수정 및 삭제 버튼 */}
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Stack direction="row" spacing={2}>
+            <Button
+              onClick={handleEdit}
+              sx={{ borderRadius: "8px !important" }}>
+              수정
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={handleDelete}
+              sx={{ borderRadius: "8px !important" }}>
+              삭제
+            </Button>
+          </Stack>
+        </Box>
+      </Stack>
+    </Container>
   );
 };
 
