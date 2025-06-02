@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Container, Button, Box, Stack, TextField } from "@mui/material";
-import axios from "../services/axios";
-
-import TextInputField from "../components/TextInputField";
-import GenreSelector from "../components/GenreSelector";
+import { Box, Button, Container, Stack, TextField } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import CoverPreview from "../components/CoverPreview";
+import GenreSelector from "../components/GenreSelector";
+import TextInputField from "../components/TextInputField";
+import axios from "../services/axios";
 
 export default function Publish() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
-  const [content, setContent] = useState("");
   const [genre, setGenre] = useState("");
-  const [synopsis, setSynopsis] = useState("");
+  const [content, setContent] = useState("");
   const [apiKey, setApiKey] = useState("");
   const [coverImage, setCoverImage] = useState(null);
+  const [synopsis, setSynopsis] = useState("");
   const [loading, setLoading] = useState(false);
 
   const genres = [
@@ -41,7 +40,7 @@ export default function Publish() {
         setSynopsis(data.synopsis);
         setCoverImage(data.coverImageUrl);
       } catch (error) {
-        console.error("도서 정보 불러오기 실패:", error);
+        console.error("도서 정보 로드 실패:", error);
       }
     };
 
@@ -120,12 +119,14 @@ export default function Publish() {
           />
           <TextInputField label="API Key" value={apiKey} onChange={setApiKey} />
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Button onClick={handleRegenerateCover} disabled={loading}>
+            <Button
+              onClick={handleRegenerateCover}
+              disabled={loading || !title || !content || !apiKey}>
               {loading ? "생성 중" : "AI 표지 다시 만들기"}
             </Button>
           </Box>
           <Box sx={{ display: "flex", gap: 3, alignItems: "flex-start" }}>
-            {/* 왼쪽:  표지 */}
+            {/* 왼쪽:  표지 이미지 */}
             <CoverPreview url={coverImage} />
             {/* 오른쪽: 시놉시스 */}
             <Box sx={{ flex: 1 }}>
